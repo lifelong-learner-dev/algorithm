@@ -509,3 +509,369 @@ print(my_list_insert)
 ##### 음수 인덱스를 사용하여 요소 삽입
 my_list_insert.insert(-1, 'd')
 print(my_list_insert)
+
+
+# 4. 알고리즘
+
+## 1) BFS (Breadth-First Search) 너비 탐색
+### 사용 자료구조:
+### 큐(Queue): BFS는 너비 우선 탐색을 위해 큐를 사용
+############# 큐에 현재 노드를 넣고, 이웃 노드를 탐색하면서 큐에 추가하는 방식
+### 집합(Set): 방문한 노드를 추적하기 위해 사용
+############# 이미 방문한 노드를 저장하여 중복 탐색을 방지
+### 딕셔너리(Dictionary): 그래프를 표현하기 위해 사용
+####################### 각 노드로 키로, 이웃 노드 리스트는 값으로 저장
+from collections import deque
+
+def bfs(graph, start):
+    visited = set()
+    queue = deque([start])
+    visited.add(start)
+
+    while queue:
+        node = queue.popleft()
+        print(node, end=' ')
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+
+## 2) DFS (Depth-First Search) 깊이 탐색
+### 사용 자료구조:
+### 스택(Stack): DFS는 깊이 우선 탐색을 위해 스택을 사용
+############### 재귀적으로 호출할 때 시스템을 스택을 사용하거나, 명시적으로 스택을 사용할 수 있음
+### 집합(Set): 방문한 노드를 추적하기 위해 사용
+### 딕셔너리(Dictionary): 그래프를 표현하기 위해 사용
+def dfs(graph, start, visited=None):
+    if visited is None:
+        visited = set()
+    visited.add(start)
+    print(start, end=' ')
+    for neighbor in graph[start]:
+        if neighbor not in visited:
+            dfs(graph, neighbor, visited)
+
+## 3) 브루트 포스 (Brute Force)
+### 사용 자료구조:
+### 리스트(List): 가능한 모든 경우의 수를 저장하고, 반복문을 통해 순차적으로 탐색할 때 사용
+### 튜플(Tuple): 불변 데이터를 저장할 떄 사용
+from itertools import permutations
+
+def brute_force(arr):
+    for perm in permutations(arr):
+        print(perm)
+
+## 4) 동적 프로그래밍 (Dynamic Programming, DP)
+### 사용 자료구조:
+### 리스트(List): 부분 문제의 해를 저장하여 중복 계산을 피하기 위해 사용
+### 딕셔너리(Dictionary): 메모이제이션을 위해 사용
+def fibonacci(n):
+    dp = [0]*(n+1)
+    dp[1] = 1
+    for i in range(2, n+1):
+        dp[i] = dp[i-1] + dp[i-2]
+    return dp[n]
+
+## 5) 정렬 알고리즘
+### 사용 자료구조:
+### 리스트(List): 대부분의 정렬 알고리즘은 리스틀 사용하여 데이터를 저장하고 정렬
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1]. arr[j]
+
+## 6) 이진 탐색 (Binary Search)
+### 사용 자료구조:
+### 리스트(List): 정렬된 리스트에서 이진 탐색 수행
+def binary_search(arr, target):
+    left, right = 0, len(arr) -1
+    while left <= right:
+        mid = (left + right)//2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+
+## 7) 그래프 알고리즘
+### 사용 자료구조:
+### 딕셔너리(Dictionary): 그래프를 표현하기 위해 사용
+### 리스트(List): 인접 리스트 표현을 위해 사용
+### 집합(Set): 방문한 노드를 추적하기 위해 사용
+### 큐(Queue): BFS와 같은 알고리즘에서 사용
+### 스택(Stack): DFS와 같은 알고리즘에서 사용
+### 덱(Deque): 양방향 탐색을 효율적으로 수행할 때 사용
+##### 예시: 다익스트라 알고리즘
+import heapq
+
+def dijkstra(graph, start):
+    distances = {node: float('inf') for node in graph}
+    distances[start] = 0
+    priority_queue = [(0, start)]
+
+    while priority_queue:
+        current_distance, current_node = heapq.heappop(priority_queue)
+
+        if current_distance > distances[current_node]:
+            continue
+
+        for neighbor, weight in graph[current_node].items():
+            distance = current_distance + weight
+
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(priority_queue, (distance, neighbor))
+
+    return distances
+
+## 8) 다익스트라 알고리즘(Dijkstra's Algorithm)
+### 정의: 다익스트라 알고리즘은 가중치가 있는 그래프에서 주어진 시작 노드로부터 다른 모드 노드까지의 최단 경로를 찾는 알고리즘
+### 사용 자료구조:
+### 우선순위 큐(Priority Queue): 최소 힙(min-heap)을 사용하여 가장 작은 가중치를 가진 노드를 효율적으로 추출
+### 딕셔너리(Dictionary): 그래프 표현 및 각 노드까지의 최단 거리를 저장
+import heapq
+
+def dijkstra(graph, start):
+    distances = {node: float('inf') for node in graph}
+    distances[start] = 0
+    priority_queue = [(0, start)]
+
+    while priority_queue:
+        current_distance, current_node = heapq.heappop(priority_queue)
+
+        if current_distance > distances[current_node]:
+            continue
+
+        for neighbor, weight in graph[current_node].items():
+            distance = current_distance + weight
+
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(priority_queue, (distance, neighbor))
+
+    return distances
+
+## 9) 플로이드-워셜 알고리즘 (Floyd-Warshall Algorithm)
+### 정의: 모든 노드 쌍 간의 최단 경로를 찾는 알고리즘으로, 그래프의 모든 쌍에 대해 최단 경로를 계산
+### 사용 자료구조:
+### 2차원 리스트 (2D List): 최단 경로 정보를 저장하기 위해 사용
+def floyd_warshall(graph):
+    num_vertices = len(graph)
+    distance = [[float('inf')] * num_vertices for _ in range(num_vertices)]
+
+    for i in range(num_vertices):
+        for j in range(num_vertices):
+            distance[i][j] = graph[i][j]
+
+    for k in range(num_vertices):
+        for i in range(num_vertices):
+            for j in range(num_vertices):
+                distance[i][j] = min(distance[i][j], distance[i][k] + distance[k][j])
+
+    return distance
+
+## 10) 크루스칼 알고리즘 (Kruskal's Algorithm)
+### 정의: 최소 스패닝 트리를 찾는 알고리즘으로, 그래프의 모든 노드를 연결하면서 최소의 비용을 찾음
+### 사용 자료구조:
+### 리스트(List): 간선들을 저장하여 정렬
+### 유니온 파인드(Union-Find): 서로소 집합 자료구조로 사이클을 감지하고 집합을 합침
+class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
+
+    def find(self, u):
+        if u != self.parent[u]:
+            self.parent[u] = self.find(self.parent[u])
+        return self.parent[u]
+
+    def union(self, u, v):
+        root_u = self.find(u)
+        root_v = self.find(v)
+        if root_u != root_v:
+            self.parent[root_v] = root_u
+
+def kruskal(graph):
+    mst = []
+    edges = sorted(graph['edges'], key=lambda edge: edge[2])
+    uf = UnionFind(graph['num_vertices'])
+
+    for u, v, weight in edges:
+        if uf.find(u) != uf.find(v):
+            uf.union(u, v)
+            mst.append((u, v, weight))
+
+    return mst
+
+## 11) 벨만-포드 알고리즘 (Bellman-Ford Algorithm)
+### 정의: 주어진 시작 노드에서 다른 모든 노드까지의 최단 경로를 찾는 알고리즘으로, 가중치가 음수인 간선도 처리할 수 있음
+### 사용 자료구조:
+### 리스트(List): 각 노드까지의 최단 거리를 저장
+### 리스트(List): 그래프의 간선 목록을 저장
+def bellman_ford(graph, start):
+    distance = {node: float('inf') for node in graph}
+    distance[start] = 0
+
+    for _ in range(len(graph) - 1):
+        for u in graph:
+            for v, weight in graph[u].items():
+                if distance[u] + weight < distance[v]:
+                    distance[v] = distance[u] + weight
+    
+    for u in graph:
+        for v, weight in graph[u].items():
+            if distance[u] + weight < distance[v]:
+                raise ValueError("Graph contains a negative-weight cycle")
+
+    return distance
+
+## 12) 위상 정렬 (Topological Sort)
+### 정의: 방향 그래프의 노드를 순서대로 정렬하는 알고리즘으로, 선행 조건이 있는 작업의 순서를 정할 때 유용
+### 사용 자료구조:
+### 스택(Stack): 정렬된 노드를 저장
+### 딕셔너리(Dictionary): 그래프의 인접 리스트 표현과 각 노드의 진입 차수를 저장
+def topological_sort(graph):
+    visited = set()
+    stack = []
+
+    def dfs(node):
+        if node in visited:
+            return
+        visited.add(node)
+        for neighbor in graph[node]:
+            dfs(neighbor)
+        stack.append(node)
+
+    for node in graph:
+        if node not in visited:
+            dfs(node)
+
+    return stack[::-1]
+
+## 13) 합병 정렬 (Merge Sort)
+### 정의: 비교 기반의 정렬 알고리즘으로, 분할 정복 기법을 사용하여 리스트를 정렬
+### 사용 자료구조:
+### 리스트(List): 정렬할 데이터를 저장
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+
+    return merge(left, right)
+
+def merge(left, right):
+    sorted_list = []
+    i = j = 0
+
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            sorted_list.append(left[i])
+            i += 1
+        else:
+            sorted_list.append(right[j])
+            j += 1
+
+    sorted_list.extend(left[i:])
+    sorted_list.extend(right[j:])
+
+    return sorted_list
+
+## 14) 퀵 정렬 (Quick Sort)
+### 정의: 비교 기반의 정렬 알고리즘으로, 분할 정복 기법을 사용하여 리스트를 정렬
+######## 피벗을 선택하여 리스트를 분할하고 재귀적으로 정렬
+### 사용 자료구조:
+### 리스트(List): 정렬할 데이터를 저장
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+
+    return quick_sort(left) + middle + quick_sort(right)
+
+## 15) 캐쉬 (Cache)
+### 정의: 자주 사용되는 데이터를 임시로 저장하여 접근 시간을 줄이는 데 사용
+### 사용 자료구조:
+### 딕셔너리(Dictionary): 키-값 쌍으로 데이터 저장
+### 덱(Deque): 최근에 사용된 데이터를 추적하여 캐시 교체 정책을 구현할 때 사용
+from collections import OrderedDict
+
+class LRUCache:
+    def __init__(self, capacity):
+        self.cache = OrderedDict()
+        self.capacity = capacity
+
+    def get(self, key):
+        if key not in self.cache:
+            return -1
+        self.cache.move_to_end(key)
+        return self.cache[key]
+
+    def put(self, key, value):
+        if key in self.cache:
+            self.cache.move_to_end(key)
+        self.cache[key] = value
+        if len(self.cache) > self.capacity:
+            self.cache.popitem(last=False)
+
+
+
+# 5. requests 라이브러리의 다양한 HTTP 메서드
+
+## 1) get(): 데이터를 가져오는 것
+## 2) post(): 데이터를 제출하는 것
+## 3) put(): 데이터를 업데이트하는 것
+## 4) delete(): 데이터를 삭제하는 것
+## 5) head(): 헤더 정보를 가져오는 것
+## 6) options(): 지원하는 메서드를 확인하는 것 
+## 7) patch(): 데이터를 부분적으로 수정하는 것
+## 8) request(): 원하는 메서드를 사용하는 것  
+
+### 1) requests.get()
+### HTTP 요청을 보낼 때 사용
+import requests
+response = requests.get('https://api.example.com/data')
+
+### 2) requests.post()
+### 서버에 데이터를 제출하기 위해 사용
+response1 = requests.post('https://httpbin.org/post', data={'key': 'value'})
+print(response.text)
+
+### 3) requests.put()
+### 서버에 데이터를 업데이트하기 위해 사용
+response2 = requests.put('https://httpbin.org/put', data={'key': 'value'})
+print(response1.text)
+
+### 4) requests.delete()
+### 서버에서 리소스를 삭제하기 위해 사용
+response3 = requests.delete('https://httpbin.org/delete')
+print(response2.text)
+
+### 5) requests.head()
+### 서버에서 헤더 정보를 가져오기 위해 사용
+response4 = requests.head('https://httpbin.org/get')
+print(response4.headers)
+
+### 6) requests.options()
+### 서버에서 지원하는 HTTP 메서드를 확인하기 위해 사용
+response5 = requests.options('https://httpbin.org/get')
+print(response5.headers)
+
+### 7) requests.patch()
+### 서버에서 리소스의 일부를 수정하기 위해 사용
+response6 = requests.patch('https://httpbin.org/patch', data={'key': 'value'})
+print(response6.text)
+
+### 8) requests.request()
+### 원하는 HTTP 메서드를 사용하여 요청을 보낼 수 있는 범용 메서드
+response7 = requests.request('GET', 'https://httpbin.org/get')
+print(response7.text)
