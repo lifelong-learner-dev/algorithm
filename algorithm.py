@@ -10,6 +10,40 @@
 my_list = [1, 2, 3, 'a', 'b']
 print(my_list)
 
+##### 조회: 원하는 데이터를 인덱스를 통해 조회 가능
+##### 첫 번째 요소 조회
+print(my_list[0])
+##### 마지막 요소 조회
+print(my_list[-1])
+
+##### 추가:
+##### append(): 리스트 끝에 요소 추가
+my_list.append(4)
+print(my_list)
+##### insert(): 특정 위치에 요소 삽입
+my_list.insert(1, 'a')
+print(my_list)
+##### extend(): 리스트 확장
+my_list.extend([5, 6])
+print(my_list)
+
+##### 수정:
+##### 인덱스를 사용하여 값 수정
+my_list[1] = 'b'
+print(my_list)
+
+##### 삭제:
+##### remove(): 특정 값을 찾아 삭제
+my_list.remove('b')
+print(my_list)
+##### pop(): 인덱스로 삭제하고 그 값을 반환
+removed_value = my_list.pop(2)
+print(removed_value)
+print(my_list)
+##### del: 인덱스를 사용하여 삭제
+del my_list[0]
+print(my_list)
+
 
 ## 2) 튜플 (Tuple)
 ## 정의: 순서가 있는 변경 불가능한 데이터 구조
@@ -20,6 +54,23 @@ print(my_list)
 ### 4. 좌표 (x, y)를 저장할 때
 my_tuple = (1, 2, 3, 'a', 'b')
 print(my_tuple)
+
+##### 조회: 원하는 데이터를 인덱스를 통해 조회 가능
+##### 첫 번째 요소 조회
+print(my_tuple[0])
+##### 마지막 요소 조회
+print(my_tuple[-1])
+
+##### 불변!: 직접적으로 요소를 추가, 수정, 삭제 할 수 없음. 튜플을 변경하려면 새로운 튜플을 생성해야 함
+my_tuple2 = (1, 2, 3)
+new_tuple = my_tuple2 + (4,)
+print(new_tuple)
+
+new_tuple = (1,) + my_tuple2[1:]
+print(new_tuple)
+
+new_tuple = my_tuple2[:1] + (5,) + my_tuple2[2:]
+print(new_tuple)
 
 
 ## 3) 사전 (Dictionary)
@@ -33,6 +84,46 @@ print(my_tuple)
 my_dict = {'a': 1, 'b': 2, 'c': 3}
 print(my_dict)
 
+##### 조회: 원하는 데이터를 키를 통해 조회 가능
+##### 키를 사용한 조회
+value_a = my_dict['a']
+print(f"a키 값은 : {value_a}")
+##### get() 메서드 사용
+value_b = my_dict.get('b')
+print(f"b키 값은 : {value_b} ")
+##### 키가 존재하지 않을 때 기본 값 반환
+value_d = my_dict.get('d', 'default_value')
+print(f"d키 값은 : {value_d}")
+##### 키 존재 여부 확인 후 값 조회
+if 'c' in my_dict:
+    value_c = my_dict['c']
+    print(f"c키 값은 {value_c}")
+else:
+    print(f"c키는 딕셔너리에 값이 없습니다.")
+
+##### 추가 및 수정:
+##### 키를 사용하여 값 할당
+##### 추가:
+my_dict['d'] = 5
+print(my_dict)
+
+##### 수정:
+my_dict['b'] = 5
+print(my_dict)
+
+##### 삭제:
+##### del: 키를 사용하여 삭제
+del my_dict['a']
+print(my_dict)
+##### pop(): 키로 삭제하고 그 값을 반환
+removed_value = my_dict.pop('c')
+print(removed_value)
+print(my_dict)
+##### popitem(): 마지막 키-값 쌍을 삭제하고 반환
+last_item = my_dict.popitem()
+print(last_item)
+print(my_dict)
+
 
 ## 4) 집합 (set)
 ## 정의: 순서가 없고 중복을 허용하지 않는 데이터 구조
@@ -42,6 +133,35 @@ print(my_dict)
 ### 3. 수학적 집합 연산 지원 (합집합, 교집합 등)
 ### 4. 고유 요소 저장: 사용자ID 저장할 때 
 my_set = {1, 2, 3}
+print(my_set)
+
+##### 조회: 집합은 순서가 없어 특정 인덱스로 조회 불가능하나 특정 값이 집합에 존재하는지는 확인 가능
+##### 값 2가 집합에 존재하는지 확인
+print(2 in my_set)
+##### 값 5가 집합에 존재하는지 확인
+print(5 in my_set)
+
+##### 추가:
+##### add(): 요소 추가
+my_set.add(4)
+print(my_set)
+##### update(): 여러 요소 추가
+my_set.update([5, 6])
+print(my_set)
+
+##### 삭제:
+##### remove(): 특정 요소 삭제 (없으면 오류 발생)
+my_set.remove(2)
+print(my_set)
+##### discard(): 특정 요소 삭제 (없어도 오류 발생 안함)
+my_set.discard(3)
+print(my_set)
+##### pop(): 임의의 요소 삭제하고 반환
+removed_value_set = my_set.pop()
+print(removed_value_set)
+print(my_set)
+##### clear(): 모든 요소 삭제
+my_set.clear()
 print(my_set)
 
 
@@ -54,6 +174,30 @@ print(my_set)
 ### 4. 슬라이딩 윈도우: 고정 크기 윈도우를 유지하면서 데이터를 처리할 때
 from collections import deque
 my_deque = deque([1, 2, 3])
+print(my_deque)
+
+##### 조회: 인덱스를 통해 조회하거나, 양 끝에서 요소를 추가 및 제거할 수 있음
+##### 첫 번째 요소 출력:
+print(my_deque[0])
+##### 마지막 요소 출력:
+print(my_deque[-1])
+
+##### 추가:
+##### append(): 오른쪽 끝에 추가
+my_deque.append(4)
+print(my_deque)
+##### appendleft(): 왼쪽 끝에 추가
+my_deque.appendleft(0)
+print(my_deque)
+
+##### 삭제:
+##### pop(): 오른쪽 끝에서 삭제하고 반환
+right_removed = my_deque.pop()
+print(right_removed)
+print(my_deque)
+##### popleft(): 왼쪽 끝에서 삭제하고 반환
+left_removed = my_deque.popleft()
+print(left_removed)
 print(my_deque)
 
 
@@ -70,6 +214,28 @@ hhmin_heap = heapq.heapify(min_heap)
 print(min_heap)
 print(hhmin_heap)
 
+##### 조회: 힙에서 최소값 또는 최대값을 조회할 수 있음
+##### 최소값 조회
+print(min_heap[0])
+##### 3번째로 작은 요소 출력
+k = 3
+kth_smallest = heapq.nsmallest(k, min_heap)[-1]
+print(kth_smallest)
+##### 최대값 조회
+max_value = max(min_heap)
+print(max_value)
+
+##### 추가:
+##### heappush(): 힙에 요소 추가
+heapq.heappush(min_heap, 2)
+print(min_heap)
+
+##### 삭제:
+##### heappop(): 최소값 삭제하고 반환
+min_value = heapq.heappop(min_heap)
+print(min_value)
+print(min_heap)
+
 
 ## 7) 스택 (Stack)
 ## 정의: 후입선출(LIFO) 원칙을 따르는 데이터 구조
@@ -83,6 +249,22 @@ stack = []
 stack.append(1)
 stack.append(2)
 stack.append(3)
+print(stack)
+
+##### 조회: 원하는 데이터를 인덱스를 통해 조회
+print(stack[-1])
+
+##### 추가: 
+##### append(): 요소 추가
+stack.append(1)
+stack.append(2)
+stack.append(3)
+print(stack)
+
+##### 삭제:
+##### pop(): 마지막 요소 삭제하고 반환
+top_value = stack.pop()
+print(top_value)
 print(stack)
 
 
@@ -101,6 +283,21 @@ queue.append(5)
 print(queue)
 queue.popleft()
 print(queue.popleft())
+print(queue)
+
+##### 조회: 원하는 데이터를 인덱스를 통해 조회
+##### 첫 번째 요소 조회
+print(queue[0])
+
+##### 추가:
+##### append(): 오른쪽 끝에 요소 추가
+queue.append(7)
+print(queue)
+
+##### 삭제:
+##### popleft(): 왼쪽 끝에 요소 삭제하고 반환
+front_value = queue.popleft()
+print(front_value)
 print(queue)
 
 
@@ -128,6 +325,27 @@ print(root.right)
 root.left.left = Node(5)
 print(root.left.left)
 
+##### 조회: 트리에서 원하는 데이터를 조회하려면 노드를 통해 접근 필요
+##### 루트 노드의 값 조회
+print(root.value)
+##### 루트의 왼쪽 자식 노드의 값 조회
+print(root.left.value)
+
+##### 추가 및 수정:
+##### 노드를 생성하여 트리에 연결하거나 노드 값을 변경
+##### 추가:
+root.left.left = Node(7)
+print(root.left.left.value)
+
+##### 수정:
+root.right.value = 5
+print(root.right.value)
+
+##### 삭제:
+##### 노드를 제거하고, 그 자식을 부모 노드에 연결
+root.left = None
+print(root.left)
+
 
 ## 10) 그래프 (Graph)
 ## 정의: 노드(정점)와 노드를 연결하는 엣지(간선)로 구성된 데이터 구조
@@ -145,6 +363,29 @@ graph = {
     'E': ['B', 'F'],
     'F': ['C', 'E'],
 }
+print(graph)
+
+##### 조회: 그래프에서 원하는 데이터를 조회하려면 노드(정점)를 통해 접근해야 함
+##### 노드 'A'의 인접 노드 조회
+print(graph['A'])
+##### 노드 'C'의 인접 노드 조회
+print(graph['C'])
+
+##### 추가 및 수정:
+##### 노드 또는 간선을 그래프에 추가하거나 노드 값을 변경
+##### 추가:
+graph['G'] = ['A']
+graph['A'].append('G')
+print(graph)
+
+##### 수정:
+graph['A'] = ['B', 'C']
+print(graph)
+
+##### 삭제:
+##### 노드 또는 간선을 그래프에서 제거
+del graph['G']
+graph['A'].remove('G')
 print(graph)
 
 
@@ -169,8 +410,34 @@ print(head.next)
 head.next.next = ListNode(3)
 print(head.next.next)
 
+##### 조회: 데이터를 조회하려면 노드를 통해 순차적으로 접근 해야함
+##### 첫 번째 노드의 값 조회
+print(head.value)
+##### 두 번째 노드의 값 조회
+print(head.next.value)
+##### 세 번째 노드의 값 조회
+print(head.next.next.value)
+
+##### 추가:
+##### 새 노드를 생성하여 기존 노드에 연결
+new_node = ListNode(7)
+new_node.next = head.next.next
+head.next.next = new_node
+print(head.next.next.value)
+
+##### 수정:
+##### 노드의 값을 변경
+head.next.value = 5
+print(head.next.value)
+
+##### 삭제:
+##### 노드를 제거하고, 그 다음 노드를 이전 노드에 연결
+head.next = head.next.next
+print(head.next.value)
+
 
 # 2. 노드(Node)와 엣지(Edge)
+
 ## 1) 노드(Node)
 ### 정의: 노드는 그래프에서 객체 또는 개체를 나타내는 기본 단위
 ### 예시: 소셜 네트워크에서 그래프에서 노드는 사용자 하나하나를 나타냄
@@ -227,18 +494,18 @@ print(my_set_add) # 출력: {1, 2, 3, 4}
 ################# 요소를 삽입할 때 이후의 모든 요소를 이동해야 함
 my_list_insert = [1, 2, 3]
 
-## 리스트의 처음에 요소 삽입
+##### 리스트의 처음에 요소 삽입
 my_list_insert.insert(0, 'a')
 print(my_list_insert)
 
-## 리스트의 중간에 요소 삽입
+##### 리스트의 중간에 요소 삽입
 my_list_insert.insert(2, 'b')
 print(my_list_insert)
 
-## 리스트의 끝에 요소 삽입
+##### 리스트의 끝에 요소 삽입
 my_list_insert.insert(10, 'c')
 print(my_list_insert)
 
-## 음수 인덱스를 사용하여 요소 삽입
+##### 음수 인덱스를 사용하여 요소 삽입
 my_list_insert.insert(-1, 'd')
 print(my_list_insert)
